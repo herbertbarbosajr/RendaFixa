@@ -1,0 +1,24 @@
+{
+  "conta": {
+    "id": 1,
+    "saldo": 10000
+  },
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "CDB Banco X",
+      "indexador": "CDI",
+      "precoUnitario": 1000,
+      "taxa": 12.5,
+      "estoque": 5
+    },
+    {
+      "id": 2,
+      "nome": "LC Banco Y",
+      "indexador": "IPCA",
+      "precoUnitario": 500,
+      "taxa": 10.2,
+      "estoque": 8
+    }
+  ]
+}
