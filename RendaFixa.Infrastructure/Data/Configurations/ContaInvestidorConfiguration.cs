@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RendaFixa.Domain.Entities;
+using FixedIncome.Domain.Entities;
 
-namespace RendaFixa.Infrastructure.Data.Configurations
+namespace FixedIncome.Infrastructure.Data.Configurations
 {
-    public class ContaInvestidorConfiguration : IEntityTypeConfiguration<ContaInvestidor>
+    public class InvestorAccountConfiguration : IEntityTypeConfiguration<CustomerAccount>
     {
-        public void Configure(EntityTypeBuilder<ContaInvestidor> builder)
+        public void Configure(EntityTypeBuilder<CustomerAccount> builder)
         {
-            builder.ToTable("Contas");
-            builder.HasKey(c => c.Id);
-            builder.Property(c => c.Saldo).IsRequired().HasColumnType("decimal(18,2)");
+            builder.ToTable("Accounts");
+            builder.HasKey(c => c.Account);
+            builder.Property(c => c.Balance).IsRequired().HasColumnType("decimal(18,2)");
         }
     }
 }

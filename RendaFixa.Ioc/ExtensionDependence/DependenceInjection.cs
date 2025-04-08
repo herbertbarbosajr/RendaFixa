@@ -2,26 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RendaFixa.Application.Interfaces;
-using RendaFixa.Application.Services;
-using RendaFixa.Domain.Interfaces;
-using RendaFixa.Infrastructure.Data;
-using RendaFixa.Infrastructure.Messagings;
-using RendaFixa.Infrastructure.Repositories;
+using FixedIncome.Application.Interfaces;
+using FixedIncome.Application.Services;
+using FixedIncome.Domain.Interfaces;
+using FixedIncome.Infrastructure.Data;
+using FixedIncome.Infrastructure.Messagings;
+using FixedIncome.Infrastructure.Repositories;
 
-namespace RendaFixa.Ioc.ExtensionDependence
+namespace FixedIncome.Ioc.ExtensionDependence
 {
     public static class DependenceInjection
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             // Registrar o DbContext com a string de conexão do SqlServer
-            services.AddDbContext<RendaFixaDBContext>(options =>
+            services.AddDbContext<FixedIncomeDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<CompraRealizadaConsumer>();
+                x.AddConsumer<PurchaseRealizedConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("rabbitmq://localhost", h =>
@@ -38,9 +38,9 @@ namespace RendaFixa.Ioc.ExtensionDependence
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             // Registrar os serviços
-            services.AddScoped<IProdutoService, ProdutoService>();
-            services.AddScoped<IProdutoRepository, ProdutoRepository>();
-            services.AddScoped<IContaRepository, ContaRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
 
             return services;
         }

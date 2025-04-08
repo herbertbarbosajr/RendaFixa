@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace RendaFixa.Infrastructure.Migrations
+namespace FixedIncome.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class inicial : Migration
@@ -16,7 +16,7 @@ namespace RendaFixa.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Saldo = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,7 +24,7 @@ namespace RendaFixa.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Produtos",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,27 +37,27 @@ namespace RendaFixa.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Produtos", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             // Inserir dados iniciais na tabela Contas
             migrationBuilder.InsertData(
                 table: "Contas",
-                columns: new[] { "Id", "Saldo" },
+                columns: new[] { "Id", "Balance" },
                 values: new object[,]
                 {
                     { 1, 1000.00m },
                     { 2, 2000.00m }
                 });
 
-            // Inserir dados iniciais na tabela Produtos
+            // Inserir dados iniciais na tabela Products
             migrationBuilder.InsertData(
-                table: "Produtos",
+                table: "Products",
                 columns: new[] { "Id", "Nome", "Indexador", "PrecoUnitario", "Taxa", "Estoque" },
                 values: new object[,]
                 {
-                    { 1, "Produto 1", "IPCA", 100.00m, 5.00m, 50 },
-                    { 2, "Produto 2", "CDI", 200.00m, 6.00m, 30 }
+                    { 1, "Product 1", "IPCA", 100.00m, 5.00m, 50 },
+                    { 2, "Product 2", "CDI", 200.00m, 6.00m, 30 }
                 });
         }
 
@@ -68,7 +68,7 @@ namespace RendaFixa.Infrastructure.Migrations
                 name: "Contas");
 
             migrationBuilder.DropTable(
-                name: "Produtos");
+                name: "Products");
         }
     }
 }

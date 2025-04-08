@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Xunit;
 using System.Collections.Generic;
 using System.Net.Http.Json;
-using RendaFixa.Application.DTO_s;
+using FixedIncome.Application.DTO_s;
 using System;
 
-public class ProdutoControllerTests
+public class ProductControllerTests
 {
     private readonly HttpClient _client;
 
-    public ProdutoControllerTests()
+    public ProductControllerTests()
     {
         var handler = new MockHttpMessageHandler();
         _client = new HttpClient(handler)
@@ -22,34 +22,34 @@ public class ProdutoControllerTests
     }
 
     [Fact]
-    public async Task GetProdutos_DeveRetornarListaDeProdutos()
+    public async Task GetProducts_DeveRetornarListaDeProducts()
     {
         // Act
-        var response = await _client.GetAsync("/api/Produto/listar");
+        var response = await _client.GetAsync("/api/Product/listar");
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var produtos = await response.Content.ReadFromJsonAsync<List<ProdutoDto>>();
-        Assert.NotNull(produtos);
-        Assert.True(produtos.Count > 0, "A lista de produtos deve conter itens.");
+        var Products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
+        Assert.NotNull(Products);
+        Assert.True(Products.Count > 0, "A lista de Products deve conter itens.");
     }
 
     private class MockHttpMessageHandler : HttpMessageHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (request.RequestUri.AbsolutePath == "/api/Produto/listar")
+            if (request.RequestUri.AbsolutePath == "/api/Product/listar")
             {
-                var produtos = new List<ProdutoDto>
+                var Products = new List<ProductDto>
                 {
-                    new ProdutoDto { Id = 1, Nome = "Produto 1" },
-                    new ProdutoDto { Id = 2, Nome = "Produto 2" }
+                    new ProductDto { Id = 1, Nome = "Product 1" },
+                    new ProductDto { Id = 2, Nome = "Product 2" }
                 };
 
                 var response = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = JsonContent.Create(produtos)
+                    Content = JsonContent.Create(Products)
                 };
 
                 return Task.FromResult(response);

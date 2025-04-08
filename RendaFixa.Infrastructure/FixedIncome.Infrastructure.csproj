@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Configurations\ProdutoRendaFixaConfiguration.cs~RF1b05ccd9.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Data\Configurations\InvestorAccountConfiguration.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.4.0" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
@@ -24,7 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RendaFixa.Domain\RendaFixa.Domain.csproj" />
+    <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
+    <ProjectReference Include="..\RendaFixa.Domain\FixedIncome.Domain.csproj" />
   </ItemGroup>
 
 </Project>

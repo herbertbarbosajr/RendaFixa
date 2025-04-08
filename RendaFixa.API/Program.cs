@@ -1,4 +1,4 @@
-using RendaFixa.Ioc.ExtensionDependence;
+using FixedIncome.Ioc.ExtensionDependence;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

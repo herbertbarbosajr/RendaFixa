@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RendaFixa.Infrastructure.Data;
+using FixedIncome.Infrastructure.Data;
 
 #nullable disable
 
-namespace RendaFixa.Infrastructure.Migrations
+namespace FixedIncome.Infrastructure.Migrations
 {
-    [DbContext(typeof(RendaFixaDBContext))]
-    partial class RendaFixaDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FixedIncomeDBContext))]
+    partial class FixedIncomeDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace RendaFixa.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RendaFixa.Domain.Entities.ContaInvestidor", b =>
+            modelBuilder.Entity("FixedIncome.Domain.Entities.ContaInvestidor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,7 +29,7 @@ namespace RendaFixa.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Saldo")
+                    b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -37,7 +37,7 @@ namespace RendaFixa.Infrastructure.Migrations
                     b.ToTable("Contas", (string)null);
                 });
 
-            modelBuilder.Entity("RendaFixa.Domain.Entities.ProdutoRendaFixa", b =>
+            modelBuilder.Entity("FixedIncome.Domain.Entities.FixedIncomeProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace RendaFixa.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Produtos", (string)null);
+                    b.ToTable("Products", (string)null);
                 });
 #pragma warning restore 612, 618
         }

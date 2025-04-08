@@ -12,8 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RendaFixa.Domain\RendaFixa.Domain.csproj" />
-    <ProjectReference Include="..\RendaFixa.Infrastructure\RendaFixa.Infrastructure.csproj" />
+    <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
+    <ProjectReference Include="..\FixedIncome.Infrastructure\FixedIncome.Infrastructure.csproj" />
+    <ProjectReference Include="..\RendaFixa.Domain\FixedIncome.Domain.csproj" />
+    <ProjectReference Include="..\RendaFixa.Infrastructure\FixedIncome.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

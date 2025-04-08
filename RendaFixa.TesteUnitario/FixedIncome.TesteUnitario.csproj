@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RendaFixa.API\RendaFixa.API.csproj" />
-    <ProjectReference Include="..\RendaFixa.Application\RendaFixa.Application.csproj" />
+    <ProjectReference Include="..\FixedIncome.API\FixedIncome.API.csproj" />
+    <ProjectReference Include="..\FixedIncome.Application\FixedIncome.Application.csproj" />
+    <ProjectReference Include="..\RendaFixa.API\FixedIncome.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
