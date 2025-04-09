@@ -11,7 +11,7 @@ namespace FixedIncome.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new FixedIncomeProductConfiguration());
-            modelBuilder.ApplyConfiguration(new InvestorAccountConfiguration());
+            modelBuilder.ApplyConfiguration(new AccountConfiguration());
         }
     }
 }

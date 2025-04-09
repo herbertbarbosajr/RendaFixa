@@ -1,5 +1,4 @@
 ﻿using FixedIncome.Domain.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FixedIncome.API.Controllers

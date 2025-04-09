@@ -14,23 +14,23 @@ namespace FixedIncome.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<InvestorAccount>> GetAll()
+        public async Task<List<CustomerAccount>> GetAll()
         {
             return await _context.Accounts.ToListAsync();
         }
 
-        public async Task<InvestorAccount> GetById(int id)
+        public async Task<CustomerAccount> GetByIdAsync(int id)
         {
             return await _context.Accounts.FindAsync(id);
         }
 
-        public async Task ToAdd(InvestorAccount conta)
+        public async Task ToAdd(CustomerAccount conta)
         {
             await _context.Accounts.AddAsync(conta);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAccount(InvestorAccount conta)
+        public async Task UpdateAsync(CustomerAccount conta)
         {
             _context.Accounts.Update(conta);
             await _context.SaveChangesAsync();
@@ -46,7 +46,7 @@ namespace FixedIncome.Infrastructure.Repositories
             }
         }
 
-        public async Task<InvestorAccount> GetAccount()
+        public async Task<CustomerAccount> GetAccount()
         {
             return await _context.Accounts.FindAsync();
         }

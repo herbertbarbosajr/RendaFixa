@@ -13,14 +13,11 @@
 
 	</ItemGroup>
 
-
 	<ItemGroup>
-		<ProjectReference Include="..\FixedIncome.API\FixedIncome.API.csproj" />
+	  <ProjectReference Include="..\RendaFixa.API\FixedIncome.API.csproj" />
+	  <ProjectReference Include="..\RendaFixa.Application\FixedIncome.Application.csproj" />
+	  <ProjectReference Include="..\RendaFixa.Domain\FixedIncome.Domain.csproj" />
 	</ItemGroup>
-
-	<Target Name="CopyDepsFile" AfterTargets="Build">
-		<Copy SourceFiles="..\FixedIncome.API\bin\Debug\net8.0\FixedIncome.API.deps.json" DestinationFiles="$(OutDir)testhost.deps.json" SkipUnchangedFiles="true" />
-	</Target>
 
 
 </Project>

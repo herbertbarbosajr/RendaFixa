@@ -1,61 +1,43 @@
-using System.Net;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using System.Collections.Generic;
-using System.Net.Http.Json;
 using FixedIncome.Application.DTO_s;
-using System;
+using FixedIncome.Application.Interfaces;
+using Moq;
+using Microsoft.AspNetCore.Mvc;
+using FixedIncome.API.Controllers;
 
-public class ProductControllerTests
+namespace FixedIncome.TesteFuncional.ControllerFuncionalTest;
+
+public class ProductControllerFunctionalTests 
 {
-    private readonly HttpClient _client;
-
-    public ProductControllerTests()
-    {
-        var handler = new MockHttpMessageHandler();
-        _client = new HttpClient(handler)
-        {
-            BaseAddress = new Uri("http://localhost")
-        };
-    }
 
     [Fact]
-    public async Task GetProducts_DeveRetornarListaDeProducts()
+    public async Task Get_DeveRetornarListaDeProdutos()
     {
+        // Arrange
+        var productServiceMock = new Mock<IProductService>();
+        var produtosMock = new List<ProductDto>
+        {
+            new ProductDto { Id = 1, BondAsset = "CDB", Index = "IPCA", Tax = 5.0, IssuerName = "Banco Teste", UnitPrice = 1000, Stock = 100 },
+            new ProductDto { Id = 2, BondAsset = "LCI", Index = "Pre", Tax = 12.0, IssuerName = "Banco Teste 2", UnitPrice = 2000, Stock = 20 }
+        };
+
+        productServiceMock
+            .Setup(service => service.GetOrderedProducts())
+            .ReturnsAsync(produtosMock);
+
+        var controller = new ProductController(productServiceMock.Object);
+
         // Act
-        var response = await _client.GetAsync("/api/Product/listar");
+        var result = await controller.Get();
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-        var Products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
-        Assert.NotNull(Products);
-        Assert.True(Products.Count > 0, "A lista de Products deve conter itens.");
-    }
-
-    private class MockHttpMessageHandler : HttpMessageHandler
-    {
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            if (request.RequestUri.AbsolutePath == "/api/Product/listar")
-            {
-                var Products = new List<ProductDto>
-                {
-                    new ProductDto { Id = 1, Nome = "Product 1" },
-                    new ProductDto { Id = 2, Nome = "Product 2" }
-                };
-
-                var response = new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = JsonContent.Create(Products)
-                };
-
-                return Task.FromResult(response);
-            }
-
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound));
-        }
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var produtos = Assert.IsType<List<ProductDto>>(okResult.Value);
+        Assert.NotNull(produtos);
+        Assert.Equal(2, produtos.Count);
+        Assert.Equal("CDB", produtos[0].BondAsset);
+        Assert.Equal("LCI", produtos[1].BondAsset);
     }
 }

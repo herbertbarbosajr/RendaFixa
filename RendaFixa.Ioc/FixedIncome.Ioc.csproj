@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FixedIncome.Application\FixedIncome.Application.csproj" />
-    <ProjectReference Include="..\FixedIncome.Infrastructure\FixedIncome.Infrastructure.csproj" />
     <ProjectReference Include="..\RendaFixa.Application\FixedIncome.Application.csproj" />
     <ProjectReference Include="..\RendaFixa.Infrastructure\FixedIncome.Infrastructure.csproj" />
   </ItemGroup>

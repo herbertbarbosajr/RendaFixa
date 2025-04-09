@@ -4,7 +4,7 @@ using FixedIncome.Domain.Entities;
 
 namespace FixedIncome.Infrastructure.Data.Configurations
 {
-    public class InvestorAccountConfiguration : IEntityTypeConfiguration<CustomerAccount>
+    public class AccountConfiguration : IEntityTypeConfiguration<CustomerAccount>
     {
         public void Configure(EntityTypeBuilder<CustomerAccount> builder)
         {

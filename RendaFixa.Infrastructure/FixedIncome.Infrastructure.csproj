@@ -11,12 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Data\Configurations\InvestorAccountConfiguration.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.4.0" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14">
       <PrivateAssets>all</PrivateAssets>
@@ -27,12 +22,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
-    <PackageReference Include="RabbitMQ.Client.Core.DependencyInjection" Version="5.0.0" />
+	  <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FixedIncome.Domain\FixedIncome.Domain.csproj" />
     <ProjectReference Include="..\RendaFixa.Domain\FixedIncome.Domain.csproj" />
   </ItemGroup>
 

@@ -1,19 +1,16 @@
 ﻿using FixedIncome.Application.DTO_s;
 using FixedIncome.Application.Interfaces;
 using FixedIncome.Domain.Interfaces;
+using FixedIncome.Infrastructure.Interfaces;
+using System.Text.Json;
 
 namespace FixedIncome.Application.Services
 {
-    public class OrderService : IOrderService
+    public class OrderService(IProductRepository productRepo, IAccountRepository accountRepo, IMessagePublisher messagePublisher) : IOrderService
     {
-        private readonly IProductRepository _productRepo;
-        private readonly IAccountRepository _accountRepo;
-
-        public OrderService(IProductRepository productRepo, IAccountRepository accountRepo)
-        {
-            _productRepo = productRepo;
-            _accountRepo = accountRepo;
-        }
+        private readonly IProductRepository _productRepo = productRepo;
+        private readonly IAccountRepository _accountRepo = accountRepo;
+        private readonly IMessagePublisher _messagePublisher = messagePublisher;
 
         public async Task<bool> PurchaseAsync(PurchaseRequest request)
         {
@@ -33,13 +30,24 @@ namespace FixedIncome.Application.Services
             if (product.Stock < request.Quantity)
                 throw new InvalidOperationException("Estoque insuficiente.");
 
-            // Atualiza os dados
             account.Balance -= totalPrice;
             product.Stock -= request.Quantity;
 
-            // Salva
             await _accountRepo.UpdateAsync(account);
             await _productRepo.UpdateAsync(product);
+
+            var orderMessage = new
+            {
+                request.AccountId,
+                request.ProductId,
+                request.Quantity,
+                TotalPrice = totalPrice,
+                Timestamp = DateTime.UtcNow
+            };
+
+            var message = JsonSerializer.Serialize(orderMessage);
+            _messagePublisher.Publish("order-queue", message);
+
 
             return true;
         }
