@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RendaFixa.TesteFuncional;
+namespace FixedIncome.TesteFuncional;
 
 public class Startup
 {

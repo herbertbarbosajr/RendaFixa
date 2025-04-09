@@ -1,0 +1,6 @@
+@FixedIncome.API_HostAddress = http://localhost:5079
+
+GET {{FixedIncome.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
