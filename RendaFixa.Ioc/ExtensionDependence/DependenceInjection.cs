@@ -16,11 +16,11 @@ namespace FixedIncome.Ioc.ExtensionDependence
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            // Registrar o DbContext com a string de conexão do SqlServer
+            
             services.AddDbContext<FixedIncomeDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            // Configurar o MassTransit com RabbitMQ
+            
             ConfigureMassTransit(services, configuration);
 
             return services;
@@ -32,28 +32,19 @@ namespace FixedIncome.Ioc.ExtensionDependence
             {
                 x.AddConsumer<PurchaseRealizedConsumer>();
 
-                //x.UsingRabbitMq((context, cfg) =>
-                //{
-                //    var rabbitMqHost = configuration["RabbitMQ:Host"] ?? "rabbitmq";
-                //    var rabbitMqUser = configuration["RabbitMQ:User"] ?? "guest";
-                //    var rabbitMqPassword = configuration["RabbitMQ:Password"] ?? "guest";
-                //    var queueName = configuration["RabbitMQ:QueueName"] ?? "purchase-realized-queue";
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("rabbitmq", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
 
-                //    cfg.Host(rabbitMqHost, h =>
-                //    {
-                //        h.Username(rabbitMqUser);
-                //        h.Password(rabbitMqPassword);
-                //    });
-
-                //    cfg.ReceiveEndpoint(queueName, e =>
-                //    {
-                //        e.ConfigureConsumer<PurchaseRealizedConsumer>(context);
-                //    });
-
-                //    cfg.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
-                //    cfg.UseInMemoryOutbox();
-                //});
+                    cfg.ConfigureEndpoints(context);
+                });
             });
+            
+            services.AddScoped<IBus>(provider => provider.GetRequiredService<IBusControl>());
         }
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
