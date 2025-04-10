@@ -1,5 +1,6 @@
 ﻿using FixedIncome.Application.DTO_s;
 using FixedIncome.Application.Interfaces;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FixedIncome.API.Controllers
@@ -9,6 +10,7 @@ namespace FixedIncome.API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        
 
         public OrderController(IOrderService orderService)
         {

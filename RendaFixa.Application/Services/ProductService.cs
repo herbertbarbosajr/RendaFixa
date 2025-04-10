@@ -2,7 +2,6 @@
 using FixedIncome.Application.DTO_s;
 using FixedIncome.Application.Interfaces;
 using FixedIncome.Domain.Interfaces;
-using FixedIncome.Infrastructure.Events;
 using FixedIncome.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -12,14 +11,12 @@ namespace FixedIncome.Application.Services
     {
         private readonly IProductRepository _productRepo;
         private readonly IAccountRepository _accountRepo;
-        private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IProductRepository productRepo, IAccountRepository accountRepo, IPublishEndpoint publishEndpoint, ILogger<ProductService> logger)
+        public ProductService(IProductRepository productRepo, IAccountRepository accountRepo, ILogger<ProductService> logger)
         {
             _productRepo = productRepo;
             _accountRepo = accountRepo;
-            _publishEndpoint = publishEndpoint;
             _logger = logger;
         }
 
@@ -56,8 +53,6 @@ namespace FixedIncome.Application.Services
 
             await _productRepo.UpdateAsync(product);
             await _accountRepo.UpdateAsync(account);
-
-            await _publishEndpoint.Publish(new PurchaseRealizedEvent(productId, amount, product.UnitPrice * amount, DateTime.UtcNow));
 
             _logger.LogInformation("Purchase completed for ProductId: {ProductId}, Amount: {Amount}", productId, amount);
         }

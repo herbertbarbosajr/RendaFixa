@@ -1,14 +1,13 @@
-﻿using MassTransit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FixedIncome.Application.Interfaces;
 using FixedIncome.Application.Services;
 using FixedIncome.Domain.Interfaces;
 using FixedIncome.Infrastructure.Data;
-using FixedIncome.Infrastructure.Messagings;
 using FixedIncome.Infrastructure.Repositories;
-using FixedIncome.Infrastructure.Interfaces;
+using MassTransit;
+using FixedIncome.Infrastructure.Messagings;
 
 namespace FixedIncome.Ioc.ExtensionDependence
 {
@@ -16,12 +15,23 @@ namespace FixedIncome.Ioc.ExtensionDependence
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            
+
             services.AddDbContext<FixedIncomeDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            
             ConfigureMassTransit(services, configuration);
+
+            return services;
+        }
+
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            // Registrar os serviços
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IProductService, ProductService>();
 
             return services;
         }
@@ -34,29 +44,18 @@ namespace FixedIncome.Ioc.ExtensionDependence
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("rabbitmq", h =>
+                    cfg.Host(configuration["RabbitMQ:HostName"], h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(configuration["RabbitMQ:UserName"]);
+                        h.Password(configuration["RabbitMQ:Password"]);
                     });
 
                     cfg.ConfigureEndpoints(context);
                 });
             });
-            
+
             services.AddScoped<IBus>(provider => provider.GetRequiredService<IBusControl>());
         }
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            // Registrar os serviços
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IMessagePublisher, RabbitMqPublisher>();
-
-            return services;
-        }
     }
 }
