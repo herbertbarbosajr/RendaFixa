@@ -1,4 +1,3 @@
-using FixedIncome.Application.Messages;
 using FixedIncome.Ioc.ExtensionDependence;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +9,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
-
-
-var consumer = new OrderMessageConsumer();
-consumer.StartConsuming();
 
 var app = builder.Build();
 

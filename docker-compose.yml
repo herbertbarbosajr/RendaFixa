@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -8,13 +9,42 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "YourStrong!Password"
+    networks:
+      - app-net
 
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5672:5672"       # conexão com apps
+      - "15672:15672"     # painel web
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - app-net
+
+  api:
+    build:
+      context: .
+      dockerfile: FixedIncome.API/Dockerfile
+    container_name: fixedincome-api
+    ports:
+      - "5000:8080"
+    depends_on:
+      - rabbitmq
+      - sqlserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=RendaFixaDB;User Id=sa;Password=YourStrong!Password;
+    networks:
+      - app-net
+
+volumes:
+  rabbitmq-data:
+
+networks:
+  app-net:
+    driver: bridge
