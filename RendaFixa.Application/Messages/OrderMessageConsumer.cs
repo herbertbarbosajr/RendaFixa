@@ -2,7 +2,6 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FixedIncome.Application.Messages
 {
@@ -19,13 +18,13 @@ namespace FixedIncome.Application.Messages
                 Password = "guest"
             };
 
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
+            using var connection = await factory.CreateConnectionAsync();
+            using var channel = await connection.CreateChannelAsync();
 
-            channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+           await channel.QueueDeclareAsync(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
             var consumer = new AsyncEventingBasicConsumer(channel);
-            consumer.Received += (model, ea) =>
+            consumer.ReceivedAsync += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
@@ -37,13 +36,13 @@ namespace FixedIncome.Application.Messages
                 return Task.CompletedTask;
             };
 
-            channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
+            await channel.BasicConsumeAsync(queue: _queueName, autoAck: true, consumer: consumer);
 
             Console.WriteLine("Consuming messages. Press [enter] to exit.");
             Console.ReadLine();
         }
 
-        private void ProcessMessage(OrderMessage? orderMessage)
+        private static void ProcessMessage(OrderMessage? orderMessage)
         {
             if (orderMessage != null)
             {
