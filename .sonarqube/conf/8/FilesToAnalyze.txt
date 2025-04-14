@@ -1,0 +1,11 @@
+﻿C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Data\Configurations\AccountConfiguration.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Data\Configurations\FixedIncomeProductConfiguration.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Data\FixedIncomeDBContext.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Events\PurchaseRealizedEvent.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Messagings\PurchaseRealizedConsumer.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Migrations\20250409135605_inicial.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Migrations\20250409135605_inicial.Designer.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Migrations\FixedIncomeDBContextModelSnapshot.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Repositories\AccountRepository.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Repositories\ProductRepository.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Infrastructure\Dados.json

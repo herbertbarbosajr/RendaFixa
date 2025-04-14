@@ -1,0 +1,8 @@
+﻿C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\DTO's\ProductDto.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\DTO's\PurchaseRequest.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\Interfaces\IOrderService.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\Interfaces\IProductService.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\Interfaces\IPurchaseEventPublisher.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\Messages\PurchaseEventPublisher.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\Services\OrderService.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Application\Services\ProductService.cs
