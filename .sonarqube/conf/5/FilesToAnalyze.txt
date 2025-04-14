@@ -1,0 +1,6 @@
+﻿C:\Users\User\source\repos\RendaFixa\FixedIncome.Domain\Entities\CustomerAccount.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Domain\Entities\FixedIncomeProduct.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Domain\Interfaces\IAccountRepository.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Domain\Interfaces\IProductRepository.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Domain\Interfaces\IPurchaseValidator.cs
+C:\Users\User\source\repos\RendaFixa\FixedIncome.Domain\Validators\PurchaseValidator.cs

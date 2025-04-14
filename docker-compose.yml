@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   sqlserver:
@@ -9,6 +8,8 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "YourStrong!Password"
+    volumes:
+       - sqlserverdata:/var/opt/mssql
     networks:
       - app-net
 
@@ -16,8 +17,8 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"       # conexão com apps
-      - "15672:15672"     # painel web
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -38,12 +39,31 @@ services:
       - sqlserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=RendaFixaDB;User Id=sa;Password=YourStrong!Password;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=RendaFixa_DB;User Id=sa;Password=YourStrong!Password;
     networks:
       - app-net
 
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - app-net
+    restart: unless-stopped
+
 volumes:
+  sqlserverdata:    
   rabbitmq-data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
 
 networks:
   app-net:
